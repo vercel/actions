@@ -14,7 +14,7 @@ The tag action requires at least two arguments: the image to be tagged, that mus
 ```
 action "tag" {
   uses = "actions/docker/tag@master"
-  command = "base github/base"
+  args = "base github/base"
 }
 ```
 
