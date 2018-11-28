@@ -52,6 +52,9 @@ tags << 'latest' if opts[:latest]
 tags.each do |tag|
   puts "tagging #{source_image} as #{dest_image}:#{tag}"
   docker("tag #{source_image} #{dest_image}:#{tag}")
+  if $?.exitstatus != 0
+    exit($?.exitstatus)
+  end
 end
 
 if opts[:env]
