@@ -10,10 +10,6 @@ LABEL "com.github.actions.icon"="package"
 LABEL "com.github.actions.color"="blue"
 COPY LICENSE README.md THIRD_PARTY_NOTICE.md /
 
-RUN apk update \
-  && (apk info | xargs -n1 -I{} apk --quiet add {}-doc); true \
-  && rm -rf /var/cache/apk/*
-
 COPY entrypoint.sh /entrypoint.sh
 
 ENTRYPOINT ["/entrypoint.sh"]
