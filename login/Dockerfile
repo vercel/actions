@@ -11,7 +11,6 @@ LABEL "com.github.actions.description"="This is an Action to log into docker."
 COPY LICENSE README.md THIRD_PARTY_NOTICE.md /
 
 RUN apk update \
-  && (apk info | xargs -n1 -I{} apk --quiet add {}-doc); true \
   && rm -rf /var/cache/apk/*
 
 ENTRYPOINT docker login -u $DOCKER_USERNAME -p $DOCKER_PASSWORD $DOCKER_REGISTRY_URL
