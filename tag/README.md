@@ -1,4 +1,4 @@
-# GitHub Action for Docker Login
+# GitHub Action for Docker Tag
 
 The GitHub Action for Docker tagging uses the current environment to tag built images with a variety of GitHub identifiers:
 
