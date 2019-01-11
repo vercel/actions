@@ -14,7 +14,7 @@ There are two required Secrets to be set:
 An example of logging into Docker Hub would look like this:
 
 ```
-task "Docker Login" {
+action "Docker Login" {
   uses = "actions/docker/login@master"
   secrets = ["DOCKER_USERNAME", "DOCKER_PASSWORD"]
 }
