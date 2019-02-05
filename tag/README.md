@@ -21,7 +21,7 @@ action "tag" {
 This will look at the following:
 
 * `GITHUB_REF` environment variable, turning `heads/refs/master` -> `master`
-* `GITHUB_SHA` taking the first six characters
+* `GITHUB_SHA` taking the first seven characters
 * `version` `LABEL` from the Dockerfile
 
 It is possible to disable these tags by passing:
