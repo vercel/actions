@@ -39,7 +39,7 @@ if [ "$1" = "build" ]; then
         echo "FROM scratch" > /tmp/dummy
         DIR="/tmp/dummy"
         # Replacing last positional parameter with dummy dir
-        set -- "${@:0:#-1}" $DIR
+        set -- "${@:0:$#-1}" $DIR
     }
 
 fi
