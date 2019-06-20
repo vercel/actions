@@ -35,8 +35,11 @@ if [ "$1" = "build" ]; then
 
     # Exit successfully if nothing to build 
     should_build || {
-        echo "$DIR hasn't changed since last commit or release $PREVIOUS_REF, no need to build"
-        exit 0
+        echo "$DIR hasn't changed since last commit or release $PREVIOUS_REF. Building dummy image instead"
+        echo "FROM scratch" > /tmp/dummy
+        DIR="/tmp/dummy"
+        # Replacing last positional parameter with dummy dir
+        set -- "${@:0:#-1}" $DIR
     }
 
 fi
