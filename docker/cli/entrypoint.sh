@@ -13,9 +13,9 @@ if [ "$1" = "build" ]; then
     PREVIOUS_REF=$(git rev-parse HEAD^1)
 
     # IF there is a tag, use the tag
-    if [ ! -z "$TAG" ]; then
+    if [ -n "$TAG" ]; then
         # tries to get the previous tag. If first one, return same
-        PREVIOUS_REF="$(git describe --tags --abbrev=0 "tags/$TAG^" || $TAG)"
+        PREVIOUS_REF="$(git describe --tags --abbrev=0 "tags/$TAG^" || echo $TAG)"
 
     fi
 
