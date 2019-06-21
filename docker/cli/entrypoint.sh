@@ -36,10 +36,12 @@ if [ "$1" = "build" ]; then
     # Exit successfully if nothing to build 
     should_build || {
         echo "$DIR hasn't changed since last commit or release $PREVIOUS_REF. Building dummy image instead"
-        echo "FROM scratch" > /tmp/dummy
+        mkdir /tmp/dummy
+        echo -e "FROM scratch\nCMD foobar" > /tmp/dummy/Dockerfile
         DIR="/tmp/dummy"
         # Replacing last positional parameter with dummy dir
-        set -- "${@:0:$#-1}" $DIR
+        set -- ${@% *} $DIR
+
     }
 
 fi
