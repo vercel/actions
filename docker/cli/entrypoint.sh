@@ -22,18 +22,14 @@ if [ "$1" = "build" ]; then
 
     should_build() {
             # --quiet will exit 1 if there are differences and 0 if none.
-
             # should deploy if lambda was changed
             git diff --quiet HEAD "$PREVIOUS_REF" -- "$DIR" || return 0
-
-            # should deploy if workflows were changed
-            git diff --quiet HEAD "$PREVIOUS_REF" -- .github/main.workflow || return 0
 
             # otherwise do not deploy.
             return 1
     }
 
-    # Exit successfully if nothing to build 
+    # Exit successfully if nothing to build
     should_build || {
         echo "$DIR hasn't changed since last commit or release $PREVIOUS_REF. Building dummy image instead"
         mkdir /tmp/dummy
