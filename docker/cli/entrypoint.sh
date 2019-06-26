@@ -33,10 +33,12 @@ if [ "$1" = "build" ]; then
     should_build || {
         echo "$DIR hasn't changed since last commit or release $PREVIOUS_REF. Building dummy image instead"
         DIR=$(mktemp -d)
-        echo $@
+        echo "Before set $*"
         echo -e "FROM scratch\nCMD foobar" > ${DIR}/Dockerfile
         # Replacing last positional parameter with dummy dir
-        set -- ${*% *} "$DIR"
+        set -- ${@% *} "$DIR"
+
+        echo "After set $*"
 
     }
 
