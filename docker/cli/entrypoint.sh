@@ -36,7 +36,7 @@ if [ "$1" = "build" ]; then
         echo $@
         echo -e "FROM scratch\nCMD foobar" > ${DIR}/Dockerfile
         # Replacing last positional parameter with dummy dir
-        set -- ${@% *} $DIR
+        set -- ${*% *} "$DIR"
 
     }
 
