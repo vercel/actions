@@ -1,7 +1,7 @@
 #!/bin/sh -l
 
 
-set -eo pipefail
+set -exo pipefail
 
 if [ "$1" = "build" ]; then
 
