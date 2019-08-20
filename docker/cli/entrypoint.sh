@@ -7,7 +7,13 @@ if [ "$1" = "build" ]; then
 
     eval DIR=\${$#}
 
-    TAG=$(echo "$GITHUB_REF" | cut -f3 -d'/')
+    # Check if it's a tag
+    case "$GITHUB_REF" in 
+        refs/tags/*)
+            TAG=$(echo "$GITHUB_REF" | cut -f3 -d'/')
+            ;;
+    esac
+
 
     # By default use previous commit as REF
     PREVIOUS_REF=$(git rev-parse HEAD^1)
