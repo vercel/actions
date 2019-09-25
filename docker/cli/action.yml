@@ -6,4 +6,4 @@ outputs:
     description: 'Tells if the build was skipped due to files not changing'
 runs:
   using: 'docker'
-  image: './docker/cli/Dockerfile'
+  image: 'Dockerfile'
