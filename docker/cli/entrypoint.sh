@@ -39,6 +39,8 @@ if [ "$1" = "build" ]; then
     should_build || {
         echo "$DIR hasn't changed since last commit or release $PREVIOUS_REF. Setting build skipped flag"
         echo ::set-output name=build_skipped::true
+
+        exit 0
     }
 
 fi
