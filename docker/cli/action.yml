@@ -1,9 +1,0 @@
-# action.yml
-name: 'Docker CLI action '
-description: 'Allows to run docker commands'
-outputs:
-  build_skipped: # id of output
-    description: 'Tells if the build was skipped due to files not changing'
-runs:
-  using: 'docker'
-  image: 'Dockerfile'
