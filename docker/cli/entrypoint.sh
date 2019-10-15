@@ -5,7 +5,10 @@ set -eo pipefail
 
 if [ "$1" = "build" ]; then
 
-    eval DIR=\${$#}
+    test -z "$PROJECT_PATH" && {
+            echo "no PROJECT_PATH provided" >&2
+            exit 1
+    }
 
     # Check if it's a tag
     case "$GITHUB_REF" in 
@@ -29,7 +32,7 @@ if [ "$1" = "build" ]; then
     should_build() {
             # --quiet will exit 1 if there are differences and 0 if none.
             # should deploy if lambda was changed
-            git diff --quiet HEAD "$PREVIOUS_REF" -- "$DIR" || return 0
+            git diff --quiet HEAD "$PREVIOUS_REF" -- "$PROJECT_PATH" || return 0
 
             # otherwise do not deploy.
             return 1
@@ -37,7 +40,7 @@ if [ "$1" = "build" ]; then
 
     # Exit successfully if nothing to build
     should_build || {
-        echo "$DIR hasn't changed since last commit or release $PREVIOUS_REF. Setting build skipped flag"
+        echo "$PROJECT_PATH" hasn't changed since last commit or release $PREVIOUS_REF. Setting build skipped flag"
         echo ::set-output name=build_skipped::true
 
         exit 0
