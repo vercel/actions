@@ -40,7 +40,7 @@ if [ "$1" = "build" ]; then
 
     # Exit successfully if nothing to build
     should_build || {
-        echo "$PROJECT_PATH" hasn't changed since last commit or release $PREVIOUS_REF. Setting build skipped flag"
+        echo "$PROJECT_PATH hasn't changed since last commit or release $PREVIOUS_REF. Setting build skipped flag"
         echo ::set-output name=build_skipped::true
 
         exit 0
