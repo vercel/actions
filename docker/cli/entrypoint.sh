@@ -30,6 +30,12 @@ if [ "$1" = "build" ]; then
 
 
     should_build() {
+            # Setting SHOULD_BUILD=1 allows enforcing a build
+            test -z "$SHOULD_BUILD" || {
+                echo "build enforced by SHOULD_BUILD"
+                return 0
+            }
+
             # --quiet will exit 1 if there are differences and 0 if none.
             # should deploy if lambda was changed
             git diff --quiet HEAD "$PREVIOUS_REF" -- "$PROJECT_PATH" || return 0
