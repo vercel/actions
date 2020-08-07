@@ -1,5 +1,6 @@
 #!/bin/sh -l
-
+set -x
+env | sort
 
 set -eo pipefail
 
