@@ -23,9 +23,12 @@ if [ "$1" = "build" ]; then
     if [ -n "$TAG" ]; then
         # Try to get the previous tag. If first one, return same
         PREVIOUS_REF="$(git describe --tags --abbrev=0 "tags/$TAG^" || echo $TAG)"
+    elif [ -n "$GITHUB_BASE_REF" ]; then
+        # In a pull request, GitHub provides the base branch (usually "master")
+        PREVIOUS_REF="$GITHUB_BASE_REF"
     else
-        # By default use previous commit as REF
-        PREVIOUS_REF="$(git rev-parse HEAD^1 || echo "$GITHUB_BASE_REF")"
+        # Fallback to using the previous commit as REF
+        PREVIOUS_REF="$(git rev-parse HEAD^1)"
     fi
 
 
