@@ -19,14 +19,13 @@ if [ "$1" = "build" ]; then
     esac
 
 
-    # By default use previous commit as REF
-    PREVIOUS_REF=$(git rev-parse HEAD^1)
-
-    # IF there is a tag, use the tag
+    # If there is a tag, use the tag
     if [ -n "$TAG" ]; then
-        # tries to get the previous tag. If first one, return same
+        # Try to get the previous tag. If first one, return same
         PREVIOUS_REF="$(git describe --tags --abbrev=0 "tags/$TAG^" || echo $TAG)"
-
+    else
+        # By default use previous commit as REF
+        PREVIOUS_REF="$(git rev-parse HEAD^1 || echo "$GITHUB_BASE_REF")"
     fi
 
 
@@ -41,7 +40,7 @@ if [ "$1" = "build" ]; then
             # should deploy if lambda was changed
             git diff --quiet HEAD "$PREVIOUS_REF" -- "$PROJECT_PATH" || return 0
 
-            # otherwise do not deploy.
+            # Otherwise do not deploy.
             return 1
     }
 
