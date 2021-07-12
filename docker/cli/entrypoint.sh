@@ -4,7 +4,7 @@ env | sort
 
 set -eo pipefail
 
-if [ "$1" = "build" ]; then
+if [ "$1" = "build" ] && [ -z "$SHOULD_BUILD" ]; then
 
     test -z "$PROJECT_PATH" && {
             echo "no PROJECT_PATH provided" >&2
@@ -18,25 +18,17 @@ if [ "$1" = "build" ]; then
             ;;
     esac
 
-
+    # By default use previous commit as REF
+    PREVIOUS_REF=$(git rev-parse HEAD^1)
 
     # IF there is a tag, use the tag
     if [ -n "$TAG" ]; then
         # tries to get the previous tag. If first one, return same
         PREVIOUS_REF="$(git describe --tags --abbrev=0 "tags/$TAG^" || echo $TAG)"
-    else
-        # By default use previous commit as REF
-        PREVIOUS_REF=$(git rev-parse HEAD^1)
     fi
 
 
     should_build() {
-            # Setting SHOULD_BUILD=1 allows enforcing a build
-            test -z "$SHOULD_BUILD" || {
-                echo "build enforced by SHOULD_BUILD"
-                return 0
-            }
-
             # --quiet will exit 1 if there are differences and 0 if none.
             # should deploy if lambda was changed
             git diff --quiet HEAD "$PREVIOUS_REF" -- "$PROJECT_PATH" || return 0
